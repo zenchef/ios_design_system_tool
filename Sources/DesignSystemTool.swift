@@ -1,14 +1,10 @@
-// The Swift Programming Language
-// https://docs.swift.org/swift-book
-// 
-// Swift Argument Parser
-// https://swiftpackageindex.com/apple/swift-argument-parser/documentation
-
+import Figlet
 import ArgumentParser
+import Foundation
 
 @main
-struct DesignSystemTool: ParsableCommand {
-    mutating func run() throws {
-        print("Hello, world!")
+struct FigletTool: ParsableCommand {
+    public func run() throws {
+        print(try PrimitiveColorService.getColors())
     }
 }
