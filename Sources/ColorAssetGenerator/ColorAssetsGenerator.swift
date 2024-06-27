@@ -14,9 +14,11 @@ final class ColorAssetsGenerator {
                         ColorsData(lightColorComponents: self.getRGB(from: entity.hexaLight),
                                     darkColorComponent: self.getRGB(from: entity.hexaDark))
                     )
-                    try String(data: jsonData, encoding: .utf8)?.write(to: URL(fileURLWithPath: path + "/Contents.json"),
-                                                                       atomically: true,
-                                                                       encoding: .utf8)
+                    try String(data: jsonData, encoding: .utf8)?.write(
+                        to: URL(fileURLWithPath: path + "/Contents.json"),
+                        atomically: true,
+                        encoding: .utf8
+                    )
                 } catch {
                     print(error.localizedDescription)
                 }

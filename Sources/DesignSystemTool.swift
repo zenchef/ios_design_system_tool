@@ -1,14 +1,12 @@
-import Figlet
 import ArgumentParser
-import Foundation
 
 @main
-struct FigletTool: ParsableCommand {
+struct DesignSystemTool: ParsableCommand {
     public func run() throws {
-        let colors = try? ThemesColorsService.getColors()
-        if let colors {
-            ColorAssetsGenerator.generate(from: colors)
+        if let primitiveColors = try? ThemesColorsService.getColors(),
+           let themeColors = try? PrimitiveColorService.getColors() {
+            print((primitiveColors + themeColors).count)
+            ColorAssetsGenerator.generate(from: primitiveColors + themeColors)
         }
-        
     }
 }

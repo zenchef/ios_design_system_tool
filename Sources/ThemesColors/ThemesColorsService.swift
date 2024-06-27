@@ -53,7 +53,6 @@ final class ThemesColorsService {
             }
             return color
         }
-        print(allColors.count)
         return allColors
     }
     
