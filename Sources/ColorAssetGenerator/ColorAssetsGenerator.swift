@@ -1,11 +1,10 @@
 import Foundation
 
 final class ColorAssetsGenerator {
-    static func generate(from colors: [ColorEntity]) {
+    static func generate(from colors: [ColorEntity], at path: String) {
         colors.forEach { entity in
-            let basePath = "/Users/adriencullier/Desktop/ZENCHEF/DesignSystemTool/ColorsAssets.xcassets"
-            let path = basePath + "/" + entity.name.formatedName + ".colorset"
-            let url = URL(fileURLWithPath: path)
+            let fullPath = path + "/" + entity.name.formatedName + ".colorset"
+            let url = URL(fileURLWithPath: fullPath)
             if !FileManager.default.fileExists(atPath: url.absoluteString) {
                 do {
                     try FileManager.default.createDirectory(at: url, withIntermediateDirectories: true, attributes: nil)
@@ -15,7 +14,7 @@ final class ColorAssetsGenerator {
                                     darkColorComponent: self.getRGB(from: entity.hexaDark))
                     )
                     try String(data: jsonData, encoding: .utf8)?.write(
-                        to: URL(fileURLWithPath: path + "/Contents.json"),
+                        to: URL(fileURLWithPath: fullPath + "/Contents.json"),
                         atomically: true,
                         encoding: .utf8
                     )
