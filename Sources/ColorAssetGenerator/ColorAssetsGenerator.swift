@@ -9,7 +9,11 @@ final class ColorAssetsGenerator {
             if !FileManager.default.fileExists(atPath: url.absoluteString) {
                 do {
                     try FileManager.default.createDirectory(at: url, withIntermediateDirectories: true, attributes: nil)
-                    let jsonData = try JSONEncoder().encode(ColorsAsset(colorComponents: getRGB(from: entity.hexaLight)))
+                    let jsonData = try JSONEncoder().encode(
+                        
+                        ColorsData(lightColorComponents: self.getRGB(from: entity.hexaLight),
+                                    darkColorComponent: self.getRGB(from: entity.hexaDark))
+                    )
                     try String(data: jsonData, encoding: .utf8)?.write(to: URL(fileURLWithPath: path + "/Contents.json"),
                                                                        atomically: true,
                                                                        encoding: .utf8)
@@ -38,20 +42,20 @@ final class ColorAssetsGenerator {
 
         return ColorComponents(red: red, green: green, blue: blue, alpha: 1)
     }
-    
-    static func generate(from colors: [ColorEntity]) -> String {
-        var string: String = "import UIKit\n\nenum Colors {"
-        colors.forEach({
-            string += "\n\tstatic var "
-            + $0.name
-            + " = "
-            + "UIColor(hexString: "
-            + "\""
-            + $0.hexaLight
-            + "\"" 
-            + ")"
-        })
-        string += "\n}"
-        return string
-    }
+//    
+//    static func generate(from colors: [ColorEntity]) -> String {
+//        var string: String = "import UIKit\n\nenum Colors {"
+//        colors.forEach({
+//            string += "\n\tstatic var "
+//            + $0.name
+//            + " = "
+//            + "UIColor(hexString: "
+//            + "\""
+//            + $0.hexaLight
+//            + "\"" 
+//            + ")"
+//        })
+//        string += "\n}"
+//        return string
+//    }
 }

@@ -1,9 +1,9 @@
 struct ColorAssetInfo: Codable {
-    var auhtor: String
+    var author: String
     var version: Int
     
     init() {
-        self.auhtor = "xcode"
+        self.author = "xcode"
         self.version  = 1
     }
 }

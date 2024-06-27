@@ -6,7 +6,6 @@ final class DimensionParser {
             var allDimensions: [DimensionEntity] = .init()
             let json = try JSONDecoder().decode(Dimensions.self, from: json)
             
-            print(json.dimension)
             allDimensions = json.dimension.compactMap({ (key: String, value: Dimension) in
                 return DimensionEntity(name: value.name, value: value.value)
             })

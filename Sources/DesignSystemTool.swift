@@ -5,6 +5,10 @@ import Foundation
 @main
 struct FigletTool: ParsableCommand {
     public func run() throws {
-        print(try PrimitiveColorService.getColors())
+        let colors = try? ThemesColorsService.getColors()
+        if let colors {
+            ColorAssetsGenerator.generate(from: colors)
+        }
+        
     }
 }

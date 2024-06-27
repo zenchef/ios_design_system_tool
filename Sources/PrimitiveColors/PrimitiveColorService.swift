@@ -1,16 +1,5 @@
 import Foundation
 
-enum DesignSystemError: Error {
-    case jsonErrorFor(path: String)
-    
-    var description: String {
-        switch self {
-        case .jsonErrorFor(let path):
-            return "Failed to get json data for path: \(path)"
-        }
-    }
-}
-
 final class PrimitiveColorService {
     static func getColors() throws -> [ColorEntity] {
         guard let jsonData = FileManager.default.contents(atPath: K.primitivePath) else {
@@ -33,9 +22,3 @@ final class PrimitiveColorService {
         return allColors
     }
 }
-
-
-
-
-
-
