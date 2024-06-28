@@ -49,7 +49,7 @@ final class ThemesColorsService {
             if let hexaDark = allDarkColors.first(where: {$0.name == color.name})?.hexaDark {
                 color.hexaDark = hexaDark
             } else {
-                fatalError("no hexa dark")
+                fatalError("⛔️ no hexa dark should not happened")
             }
             return color
         }

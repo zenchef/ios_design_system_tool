@@ -43,20 +43,4 @@ final class ColorAssetsGenerator {
 
         return ColorComponents(red: red, green: green, blue: blue, alpha: 1)
     }
-//    
-//    static func generate(from colors: [ColorEntity]) -> String {
-//        var string: String = "import UIKit\n\nenum Colors {"
-//        colors.forEach({
-//            string += "\n\tstatic var "
-//            + $0.name
-//            + " = "
-//            + "UIColor(hexString: "
-//            + "\""
-//            + $0.hexaLight
-//            + "\"" 
-//            + ")"
-//        })
-//        string += "\n}"
-//        return string
-//    }
 }
