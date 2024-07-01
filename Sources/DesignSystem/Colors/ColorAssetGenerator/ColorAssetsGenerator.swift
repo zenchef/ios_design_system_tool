@@ -1,31 +1,47 @@
 import Foundation
 
 final class ColorAssetsGenerator {
+    // MARK: - Static internal functions
     static func generate(from colors: [ColorEntity], at path: String) {
-        colors.forEach { entity in
-            let fullPath = path + "/" + entity.name.formatedName + ".colorset"
-            let url = URL(fileURLWithPath: fullPath)
-            if !FileManager.default.fileExists(atPath: url.absoluteString) {
-                do {
-                    try FileManager.default.createDirectory(at: url, withIntermediateDirectories: true, attributes: nil)
-                    let jsonData = try JSONEncoder().encode(
-                        
-                        ColorsData(lightColorComponents: self.getRGB(from: entity.hexaLight),
-                                    darkColorComponent: self.getRGB(from: entity.hexaDark))
-                    )
-                    try String(data: jsonData, encoding: .utf8)?.write(
-                        to: URL(fileURLWithPath: fullPath + "/Contents.json"),
-                        atomically: true,
-                        encoding: .utf8
-                    )
-                } catch {
-                    print(error.localizedDescription)
-                }
+        self.cleanAssetsFolder(for: path) {
+            colors.forEach { entity in
+                let fullPath = path + "/" + entity.name.formatedName + ".colorset"
+                self.genrerateAssetColorItem(colorEntity: entity, path: fullPath)
             }
         }
     }
     
-    static func getRGB(from hexa: String) -> ColorComponents {
+    // MARK: - Static private functions
+    private static func cleanAssetsFolder(for path: String, completion: @escaping () -> Void) {
+        do {
+            try FileManager.default.removeItem(atPath: path)
+            completion()
+        } catch {
+            print("Error deleting file: \(error)")
+        }
+    }
+    
+    private static func genrerateAssetColorItem(colorEntity: ColorEntity, path: String) {
+        let url = URL(fileURLWithPath: path)
+            do {
+                try FileManager.default.createDirectory(at: url, 
+                                                        withIntermediateDirectories: true,
+                                                        attributes: nil)
+                let jsonData = try JSONEncoder().encode(
+                    ColorsData(lightColorComponents: self.getRGB(from: colorEntity.hexaLight),
+                                darkColorComponent: self.getRGB(from: colorEntity.hexaDark))
+                )
+                try String(data: jsonData, encoding: .utf8)?.write(
+                    to: URL(fileURLWithPath: path + "/Contents.json"),
+                    atomically: true,
+                    encoding: .utf8
+                )
+            } catch {
+                print(error.localizedDescription)
+            }
+    }
+    
+    private static func getRGB(from hexa: String) -> ColorComponents {
         let hexString = hexa.trimmingCharacters(in: .whitespacesAndNewlines)
         let scanner = Scanner(string: hexString)
         
