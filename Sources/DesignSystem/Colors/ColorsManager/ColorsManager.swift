@@ -6,7 +6,11 @@ final class ColorsManager: DesignElement {
             ColorAssetsGenerator.generate(from: primitiveColors + themeColors, at: K.assetPath)
             print("🚀 \((primitiveColors + themeColors).count) have been generated with success")
         } catch {
-            print("⛔️ Failed to generate assets")
+            if let error = error as? DesignSystemError {
+                print(error.description)
+            } else {
+                print(error.localizedDescription)
+            }
         }
     }
 }
