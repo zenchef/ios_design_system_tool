@@ -1,3 +1,5 @@
+import Foundation
+
 extension String {
     var formatedName: String {
         if self.contains("-") {
@@ -8,5 +10,11 @@ extension String {
         } else {
             return self
         }
+    }
+    
+    /// Aims to filter all the non numeric (double) characters
+    var doubleString: String {
+        let characterSet = CharacterSet(charactersIn: "0123456789.").inverted
+        return components(separatedBy: characterSet).joined()
     }
 }
