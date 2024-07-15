@@ -6,11 +6,11 @@ final class DimensionFileGenerator {
     static func generate(from dimensions: [DimensionDataModel], at path: String) {
         var contentFileStr: String = "import Foundation"
         + String(repeating: "\n", count: 2)
-        + "enum Dimensions {"
+        + "public enum Dimensions {"
         dimensions.forEach({
             contentFileStr += "\n"
             + "\t"
-            + "static let \($0.name): CGFloat = \($0.value)"
+            + "public static let \($0.name): CGFloat = \($0.value)"
         })
         contentFileStr += "\n"
         + "}"
