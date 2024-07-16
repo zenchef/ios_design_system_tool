@@ -1,5 +1,6 @@
 final class DesignSystemManager {
     static var elements: [DesignElement] = [
-        ColorsManager()
+        ColorsManager(),
+        DimensionsManager()
     ]
 }
