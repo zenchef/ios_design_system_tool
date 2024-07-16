@@ -1,0 +1,3 @@
+protocol DesignElement {
+    func generate()
+}
