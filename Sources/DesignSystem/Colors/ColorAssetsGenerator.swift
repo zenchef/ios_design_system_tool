@@ -8,10 +8,74 @@ final class ColorAssetsGenerator {
                 let fullPath = path + "/" + entity.name.formatedName + ".colorset"
                 self.genrerateAssetColorItem(colorEntity: entity, path: fullPath)
             }
+            self.writeColorsExtension(for: colors)
+            self.writeUIColorsExtension(for: colors)
         }
     }
     
     // MARK: - Static private functions
+    private static func writeColorsExtension(for colors: [ColorEntity]) {
+        let url = URL(fileURLWithPath: K.colorExtensionPath)
+        do {
+            let handle = try FileHandle(forWritingTo: url)
+            handle.seekToEndOfFile()
+            
+            var output = """
+            import SwiftUI
+            
+            public extension Color {
+            \n
+            """
+            
+            for color in colors {
+                if color.name != "white" {
+                    output += """
+                        static var \(color.name): Color {
+                            return Color("\(color.name)", bundle: .module)
+                        }\n
+                    """
+                }
+            }
+            
+            output += "}"
+
+            try output.write(to: url, atomically: true, encoding: .utf8)
+        } catch let error {
+            print(error.localizedDescription)
+        }
+    }
+    
+    private static func writeUIColorsExtension(for colors: [ColorEntity]) {
+        let url = URL(fileURLWithPath: K.uiColorExtensionPath)
+        do {
+            let handle = try FileHandle(forWritingTo: url)
+            handle.seekToEndOfFile()
+            
+            var output = """
+            import UIKit
+            
+            public extension UIColor {
+            \n
+            """
+            
+            for color in colors {
+                if color.name != "white" {
+                    output += """
+                        static var \(color.name): UIColor {
+                            return UIColor(resource: ColorResource(name: "\(color.name)", bundle: .module))
+                        }\n
+                    """
+                }
+            }
+            
+            output += "}"
+
+            try output.write(to: url, atomically: true, encoding: .utf8)
+        } catch let error {
+            print(error.localizedDescription)
+        }
+    }
+    
     private static func genrerateAssetColorItem(colorEntity: ColorEntity, path: String) {
         let url = URL(fileURLWithPath: path)
         do {

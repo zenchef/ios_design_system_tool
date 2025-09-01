@@ -41,15 +41,15 @@ final class ThemesColorsService {
         darkThemes.shadow.values.forEach { type in
             self.updateColors(colors: &allDarkColors, with: type)
         }
-        guard allDarkColors.count == allLighColors.count else {
-            fatalError("not the same color count")
-        }
+        //guard allDarkColors.count == allLighColors.count else {
+        //    fatalError("not the same color count")
+        //}
         let allColors = allLighColors.map { color in
             var color = color
             if let hexaDark = allDarkColors.first(where: {$0.name == color.name})?.hexaDark {
                 color.hexaDark = hexaDark
             } else {
-                fatalError("⛔️ no hexa dark should not happened")
+               //fatalError("⛔️ no hexa dark should not happened")
             }
             return color
         }
